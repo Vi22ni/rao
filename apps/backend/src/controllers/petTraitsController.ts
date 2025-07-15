@@ -1,15 +1,13 @@
 import PetTrait from '../models/PetTrait';
 import { Request, Response } from 'express';
 
-interface IPetTrait {
+export interface IPetTrait {
     id: number;
     petId: number;
     traitId: number;
 }
 
 export const createPetTrait = async (traitIds: number[], petId: number) => {
-    console.log("🚀 ~ createPetTrait ~ petId:", petId)
-    console.log("🚀 ~ createPetTrait ~ traitIds:", traitIds)
     const petTraits: IPetTrait[] = []
     try {
         for (let i = 0; i < traitIds.length; i++) {
@@ -25,4 +23,13 @@ export const createPetTrait = async (traitIds: number[], petId: number) => {
         console.log("🚀 ~ createPetTrait ~ error:", error)
     }
     return petTraits;
+}
+
+export const getPetTraits = async (petId: number) => {
+    try {
+        const petTraits: IPetTrait[] = await PetTrait.findAll({ where: { pet_id: petId } });
+        return petTraits;
+    } catch (error: any) {
+        console.log("🚀 ~ getPetTrait ~ error:", error);
+    }
 }

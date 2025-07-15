@@ -1,6 +1,6 @@
 import Pet from '../models/Pet';
 import { Request, Response } from 'express';
-import { createPetTrait } from './petTraitsController'
+import { createPetTrait, getPetTraits, IPetTrait } from './petTraitsController'
 
 interface IPet {
   id: number;
@@ -20,14 +20,14 @@ export const createPet = async (req: Request, res: Response) => {
   try {
     const pet = await Pet.create(req.body);
     const traits = await createPetTrait(req.body.traits, pet.dataValues.id);
-      res.status(201).json(
-        {
-          data: {
-            ...pet,
-            traits: traits
-          }
+    res.status(201).json(
+      {
+        data: {
+          ...pet,
+          traits: traits
         }
-      )
+      }
+    )
   } catch (error: any) {
     res.status(400).json({ error: error.message });
   }
@@ -35,7 +35,7 @@ export const createPet = async (req: Request, res: Response) => {
 
 export const getPetById = async (req: Request, res: Response) => {
   try {
-    const pet = await Pet.findByPk(req.params.id);
+    const pet = await Pet.findByPk(req.params.id, { include: ['traits'] });
     res.status(200).json({ data: pet });
   } catch (error: any) {
     res.status(400).json({ error: error.message });
@@ -54,6 +54,7 @@ export const getPets = async (req: Request<{}, {}, {}, PaginationQuery>, res: Re
     const { count, rows: pets } = await Pet.findAndCountAll({
       limit: size,
       offset: (page - 1) * size,
+      include: ['traits']
     });
 
     res.status(200).json({
