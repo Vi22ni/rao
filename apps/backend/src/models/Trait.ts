@@ -1,29 +1,24 @@
 import { Model, DataTypes } from 'sequelize';
 import sequelize from '../config/database';
 
-class Pet extends Model {
+class Trait extends Model {
   public id!: number;
   public name!: string;
-  public species!: 'dog' | 'cat';
-  public photoUrl!: string;
-  public status!: 'pending' | 'approved' | 'rejected';
   public isActive!: boolean;
 }
 
-Pet.init({
+Trait.init({
   name: DataTypes.STRING,
-  species: DataTypes.ENUM('dog', 'cat'),
-  photoUrl: { type: DataTypes.TEXT, field: 'photo_url' },
-  status: DataTypes.ENUM('pending', 'approved', 'rejected'),
   isActive: { type: DataTypes.BOOLEAN, field: 'is_active', defaultValue: true }
 }, {
   sequelize,
-  modelName: 'pet',
-  tableName: 'pets',
+  modelName: 'trait',
+  tableName: 'traits',
   underscored: true,
   timestamps: true,
   createdAt: 'created_at',
   updatedAt: 'updated_at'
 });
 
-export default Pet;
+
+export default Trait;
