@@ -9,6 +9,8 @@ const props = defineProps({
     },
     isSelected: Boolean
 })
+
+const { pet } = props;
 </script>
 
 <template>

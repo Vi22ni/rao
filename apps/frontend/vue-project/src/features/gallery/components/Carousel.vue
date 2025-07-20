@@ -40,9 +40,9 @@ const navigate = (direction: 'prev' | 'next') => {
         }
     }
 
-    setTimeout(() => {
+    // setTimeout(() => {
         isAnimating.value = false
-    }, 500)
+    // }, 500)
 }
 
 const touchStartX = ref(0)
@@ -89,6 +89,7 @@ section {
     box-shadow: 0px -2px 1px 0px rgba(0, 0, 0, 0.40) inset, 0px 10px 15px 0px rgba(0, 0, 0, 0.30);
     padding-bottom: 15px;
     overflow: hidden;
+    margin-bottom: 30px;
 }
 
 .wrapper,
