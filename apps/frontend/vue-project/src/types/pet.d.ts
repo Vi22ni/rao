@@ -9,4 +9,5 @@ export interface IPet {
     photoUrl: string;
     species: string;
     traits: ITrait[];
+    humanName: string;
 }

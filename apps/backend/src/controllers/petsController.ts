@@ -8,6 +8,7 @@ interface IPet {
   species: 'dog' | 'cat';
   photoUrl: string;
   status?: 'pending' | 'approved' | 'rejected';
+  humanName: string;
 }
 
 
@@ -78,7 +79,7 @@ export const updatePet = async (req: Request, res: Response) => {
       return res.status(404).json({ error: 'Pet não encontrado' });
     }
 
-    const allowedFields: (keyof IPet)[] = ['name', 'species', 'photoUrl', 'status'];
+    const allowedFields: (keyof IPet)[] = ['name', 'species', 'photoUrl', 'status', 'humanName'];
     const updates = Object.keys(req.body)
       .filter(key => allowedFields.includes(key as keyof IPet))
       .reduce((obj, key) => {

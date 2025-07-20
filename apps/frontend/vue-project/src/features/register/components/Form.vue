@@ -2,24 +2,17 @@
 import { ref } from 'vue';
 import ImageUpload from '@/components/ImageUpload.vue'
 import TraitsSelector from '@/components/TraitsSelector.vue';
+import getTraits from '../composables/getTraits';
+import type { ITrait } from '@/types/pet';
 
 const imageFile = ref<File | null>(null);
 
-const traits = ref<string[]>([]);
+const { traits: traitsOptions, loading, error } = getTraits();
+
+
+const traits = ref<ITrait[]>([{ id: 0, name: 'exemplo' }]);
 const name = ref('');
 const petName = ref('');
-
-const traitsOptions = [
-    'brincalhão',
-    'calmo',
-    'preguiçoso',
-    'observador',
-    'comilão',
-    'atlético',
-    'quieto',
-    'barulhento',
-    'nervoso'
-];
 
 const handleSubmit = () => {
     const formData = {

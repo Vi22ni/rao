@@ -8,6 +8,7 @@ class Pet extends Model {
   public photoUrl!: string;
   public status!: 'pending' | 'approved' | 'rejected';
   public isActive!: boolean;
+  public humanName!: string;
 }
 
 Pet.init({
@@ -15,7 +16,8 @@ Pet.init({
   species: DataTypes.ENUM('dog', 'cat'),
   photoUrl: { type: DataTypes.TEXT, field: 'photo_url' },
   status: DataTypes.ENUM('pending', 'approved', 'rejected'),
-  isActive: { type: DataTypes.BOOLEAN, field: 'is_active', defaultValue: true }
+  isActive: { type: DataTypes.BOOLEAN, field: 'is_active', defaultValue: true },
+  humanName: DataTypes.STRING
 }, {
   sequelize,
   modelName: 'pet',

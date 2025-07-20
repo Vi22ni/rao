@@ -1,20 +1,21 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue';
+import type { ITrait } from '@/types/pet';
 
 const props = defineProps<{
-    traitsOptions: string[];
+    traitsOptions: ITrait[];
 }>();
 
 const emit = defineEmits(['update:modelValue']);
 
-const selectedTraits = ref<string[]>([]);
+const selectedTraits = ref<number[]>([]);
 
-const toggleTrait = (trait: string) => {
-    const index = selectedTraits.value.indexOf(trait);
+const toggleTrait = (traitId: number) => {
+    const index = selectedTraits.value.indexOf(traitId);
 
     if (index === -1) {
         if (selectedTraits.value.length < 3) {
-            selectedTraits.value.push(trait);
+            selectedTraits.value.push(traitId);
         }
     } else {
         selectedTraits.value.splice(index, 1);
@@ -33,10 +34,10 @@ watch(selectedTraits, (newVal) => {
             placeholder="escolha até 3 termos que descrevam seu pet:" />
 
         <div class="traitsGrid">
-            <button v-for="trait in traitsOptions" :key="trait" type="button" @click="toggleTrait(trait)"
-                :class="{ 'traitSelected': selectedTraits.includes(trait) }"
-                :disabled="selectedTraits.length >= 3 && !selectedTraits.includes(trait)">
-                {{ trait }}
+            <button v-for="trait in traitsOptions" :key="trait.id" type="button" @click="toggleTrait(trait.id)"
+                :class="{ 'traitSelected': selectedTraits.includes(trait.id) }"
+                :disabled="selectedTraits.length >= 3 && !selectedTraits.includes(trait.id)">
+                {{ trait.name }}
             </button>
         </div>
     </div>

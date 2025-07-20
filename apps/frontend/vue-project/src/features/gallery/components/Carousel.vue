@@ -9,7 +9,9 @@ const props = defineProps({
         type: Array as PropType<IPet[]>,
         required: true
     },
-    hasMore: Boolean
+    hasMore: Boolean,
+    loading: Boolean,
+    error: String
 })
 
 const emit = defineEmits(['loadMore'])
@@ -32,7 +34,7 @@ const navigate = (direction: 'prev' | 'next') => {
     if (direction === 'prev' && currentIndex.value > 0) {
         currentIndex.value--
     } else if (direction === 'next') {
-        if (currentIndex.value >= props.pets.length - 3 && props.hasMore) {
+        if (currentIndex.value >= props.pets.length - 5 && props.hasMore) {
             emit('loadMore')
         }
         if (currentIndex.value < props.pets.length - 1) {
@@ -41,20 +43,29 @@ const navigate = (direction: 'prev' | 'next') => {
     }
 
     // setTimeout(() => {
-        isAnimating.value = false
+    isAnimating.value = false
     // }, 500)
 }
 
 const touchStartX = ref(0)
 const onTouchStart = (e: TouchEvent | MouseEvent) => {
-    touchStartX.value = e instanceof TouchEvent ? e.touches[0].clientX : e.clientX
+    if ('touches' in e) {
+        touchStartX.value = e.touches[0].clientX;
+    } else {
+        touchStartX.value = e.clientX;
+    }
 }
 
 const onTouchEnd = (e: TouchEvent | MouseEvent) => {
-    const touchEndX = e instanceof TouchEvent ? e.changedTouches[0].clientX : e.clientX
+    let touchEndX: number;
+    if ('changedTouches' in e) {
+        touchEndX = e.changedTouches[0].clientX;
+    } else {
+        touchEndX = e.clientX;
+    }
     const diff = touchStartX.value - touchEndX
 
-    if (Math.abs(diff) > 50) { 
+    if (Math.abs(diff) > 50) {
         navigate(diff > 0 ? 'next' : 'prev')
     }
 }
@@ -67,6 +78,13 @@ const onTouchEnd = (e: TouchEvent | MouseEvent) => {
         <div class="wrapper" :style="{ transform: `translateX(-${currentIndex * 200}px)` }">
             <Card v-for="(pet, index) in pets" :key="pet.id" :pet="pet" :is-selected="index === currentIndex"
                 :style="{ transition: isAnimating ? 'transform 0.5s ease' : 'none' }" />
+            <div v-if="loading" class="loadingMessage">
+                Carregando mais pets...
+            </div>
+
+            <div v-if="error" class="errorMessage">
+                {{ error }}
+            </div>
         </div>
 
         <div class="actions">
@@ -126,5 +144,16 @@ button {
 button:hover {
     background: linear-gradient(180deg, #dfdfdf 0%, #cbcbcb 50%, #b7b7b7 55%, #8f8f8f 100%);
     cursor: pointer;
+}
+
+.loadingMessage,
+.errorMessage {
+    padding: 1rem;
+    text-align: center;
+    margin: 1rem 0;
+}
+
+.errorMessage {
+    color: #ff4444;
 }
 </style>
