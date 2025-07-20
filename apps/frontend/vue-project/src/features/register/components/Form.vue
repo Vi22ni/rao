@@ -61,7 +61,7 @@ form {
     gap: 10px;
     border-radius: 2px;
     background: rgba(194, 195, 196, 0.95);
-    box-shadow: 0px -2px 1px 0px rgba(0, 0, 0, 0.40) inset, 0px 10px 15px 0px rgba(0, 0, 0, 0.30);
+    box-shadow: 0px -2px 1px 0px #3c3c3c inset, 0px 10px 15px 0px rgba(0, 0, 0, 0.30);
     color: rgba(60, 60, 60);
     font-size: 14px;
     font-style: italic;
@@ -78,27 +78,29 @@ form {
 button {
     display: flex;
     height: 100%;
-    padding: 15px 20px;
+    padding: 10px 12px;
     justify-content: center;
+    width: fit-content;
     align-items: center;
     flex-shrink: 0;
     align-self: stretch;
     border-radius: 50px;
     background: linear-gradient(180deg, rgba(223, 223, 223, 0.95) 0%, rgba(203, 203, 203, 0.95) 50%, rgba(183, 183, 183, 0.95) 55%, rgba(143, 143, 143, 0.95) 100%);
-    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
+    box-shadow: 0px -2px 1px 0px #3c3c3c inset, 0px 5px 10px 0px rgba(0, 0, 0, 0.10);
     cursor: pointer;
     border: none;
     transition: all 500ms ease-in-out;
     color: rgba(60, 60, 60, 0.90);
-    font-size: 16px;
+    font-size: 14px;
     font-style: normal;
     font-weight: bold;
     line-height: normal;
     margin-top: 15px;
+    align-self: flex-end;
 }
 
 button:hover {
-    box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.35);
+    box-shadow: 0px -2px 1px 0px #3c3c3c inset, 0px 4px 8px 0px rgba(0, 0, 0, 0.35);
     background: linear-gradient(180deg, rgba(223, 223, 223) 0%, rgba(203, 203, 203) 50%, rgba(183, 183, 183) 55%, rgba(143, 143, 143) 100%);
 
 }
@@ -106,12 +108,6 @@ button:hover {
 @media(min-width: 800px) {
     form {
         width: 80%;
-    }
-
-    button {
-        padding: 15px 20px;
-        width: 33%;
-        align-self: flex-end;
     }
 }
 </style>

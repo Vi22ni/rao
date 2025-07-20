@@ -50,7 +50,7 @@ watch(selectedTraits, (newVal) => {
     gap: 10px;
     border-radius: 2px;
     background: rgba(194, 195, 196, 0.95);
-    box-shadow: 0px -2px 1px 0px rgba(0, 0, 0, 0.40) inset, 0px 10px 15px 0px rgba(0, 0, 0, 0.30);
+    box-shadow: 0px -2px 1px 0px #3c3c3c inset, 0px 10px 15px 0px rgba(0, 0, 0, 0.30);
     color: rgba(60, 60, 60);
     font-size: 12px;
     font-style: italic;
@@ -61,7 +61,6 @@ watch(selectedTraits, (newVal) => {
 
 .textInput:focus {
     background: rgba(194, 195, 196);
-
     outline: none;
 }
 
@@ -75,21 +74,22 @@ watch(selectedTraits, (newVal) => {
 .traitsGrid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
+    gap: 5px;
 }
 
 .traitsGrid button {
     display: flex;
     height: 41px;
-    padding: 15px 6px;
+    padding: 10px 12px;
     justify-content: center;
     align-items: center;
     border-radius: 5px;
     background: linear-gradient(180deg, rgba(223, 223, 223, 0.85) 0%, rgba(203, 203, 203, 0.85) 50%, rgba(183, 183, 183, 0.85) 55%, rgba(143, 143, 143, 0.85) 100%);
-    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
+    box-shadow: 0px -2px 1px 0px #3c3c3c inset, 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
     border: none;
     color: rgba(60, 60, 60, 0.90);
     font-size: 12px;
+    font-weight: bold;
 }
 
 .traitsGrid button:hover:not(:disabled) {
@@ -102,9 +102,8 @@ watch(selectedTraits, (newVal) => {
 }
 
 .traitSelected {
-    font-weight: bold;
     background: linear-gradient(180deg, #DFDFDF 0%, #CBCBCB 50%, #B7B7B7 55%, #8F8F8F 100%) !important;
-    box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.40) !important;
+    box-shadow: 0px -2px 1px 0px #3c3c3c inset, 0px 4px 8px 0px rgba(0, 0, 0, 0.40) !important;
 }
 
 @media(min-width: 800px) {
