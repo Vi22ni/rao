@@ -1,6 +1,7 @@
 <script setup lang="ts">
+import Register from '@/features/register';
 </script>
 
 <template>
-    <h1>Registrar</h1>
+    <Register />
 </template>
