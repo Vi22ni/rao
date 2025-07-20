@@ -5,31 +5,27 @@ import type { PropType } from 'vue';
 const props = defineProps({
     pet: {
         type: Object as PropType<IPet>,
-        default: () => { }
+        required: true
     },
-    isFirst: {
-        type: Boolean,
-        default: false
-    }
+    isSelected: Boolean
 })
-
-const { pet, isFirst } = props;
-console.log("🚀 ~ pet:", pet)
 </script>
 
 <template>
-    <div :class="{ 'firstCard': isFirst, 'card': !isFirst }"
-        :style="{ background: `linear-gradient(180deg, rgba(0, 0, 0, 0.00) 50%, #000 100%), url(${pet.photoUrl}) lightgray 50% / cover no-repeat ` }">
+    <div :class="['card', { 'selectedCard': isSelected }]" :style="{
+        background: `linear-gradient(180deg, rgba(0, 0, 0, 0.00) 50%, #000 100%), url(${pet.photoUrl}) lightgray 50% / cover no-repeat`,
+        zIndex: isSelected ? 2 : 1,
+        transition: 'all 0.3s ease'
+    }">
         <div class="infoWrapper">
-            <h2>
-                {{ pet.name }}
-            </h2>
+            <h2>{{ pet.name }}</h2>
         </div>
     </div>
 </template>
 
+
 <style scoped>
-.firstCard,
+.selectedCard,
 .card {
     display: flex;
     width: 200px;
@@ -41,11 +37,14 @@ console.log("🚀 ~ pet:", pet)
     gap: 10px;
     flex-shrink: 0;
     box-shadow: 0px -2px 1px 0px rgba(0, 0, 0, 0.40) inset, 0px 10px 15px 0px rgba(0, 0, 0, 0.30);
+    /* flex: 0 0 100%; */
+    overflow: hidden;
 }
 
-.firstCard {
+.selectedCard {
     height: 210px;
     border-radius: 0px 0px 0px 50px;
+    margin-left: 30px;
 }
 
 .infoWrapper {
@@ -59,7 +58,7 @@ console.log("🚀 ~ pet:", pet)
     align-self: stretch;
 }
 
-.firstCard h2,
+.selectedCard h2,
 .card h2 {
     color: #FFF;
     font-style: normal;
@@ -68,7 +67,7 @@ console.log("🚀 ~ pet:", pet)
     line-height: normal;
 }
 
-.firstCard h2 {
+.selectedCard h2 {
     font-size: 36px;
 }
 </style>
