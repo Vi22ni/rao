@@ -8,14 +8,14 @@ const props = defineProps<{
 
 const emit = defineEmits(['update:modelValue']);
 
-const selectedTraits = ref<number[]>([]);
+const selectedTraits = ref<ITrait[]>([]);
 
-const toggleTrait = (traitId: number) => {
-    const index = selectedTraits.value.indexOf(traitId);
+const toggleTrait = (trait: ITrait) => {
+    const index = selectedTraits.value.indexOf(trait);
 
     if (index === -1) {
         if (selectedTraits.value.length < 3) {
-            selectedTraits.value.push(traitId);
+            selectedTraits.value.push(trait);
         }
     } else {
         selectedTraits.value.splice(index, 1);
@@ -34,9 +34,9 @@ watch(selectedTraits, (newVal) => {
             placeholder="escolha até 3 termos que descrevam seu pet:" />
 
         <div class="traitsGrid">
-            <button v-for="trait in traitsOptions" :key="trait.id" type="button" @click="toggleTrait(trait.id)"
-                :class="{ 'traitSelected': selectedTraits.includes(trait.id) }"
-                :disabled="selectedTraits.length >= 3 && !selectedTraits.includes(trait.id)">
+            <button v-for="trait in traitsOptions" :key="trait.id" type="button" @click="toggleTrait(trait)"
+                :class="{ 'traitSelected': selectedTraits.includes(trait) }"
+                :disabled="selectedTraits.length >= 3 && !selectedTraits.includes(trait)">
                 {{ trait.name }}
             </button>
         </div>

@@ -1,6 +1,14 @@
 import Pet from '../models/Pet';
 import { Request, Response } from 'express';
 import { createPetTrait, getPetTraits, IPetTrait } from './petTraitsController'
+import { uploadImage } from '../utils/uploadImage';
+import fs from 'fs';
+import path from 'path';
+
+const TEMP_DIR = path.join(__dirname, '../../temp');
+if (!fs.existsSync(TEMP_DIR)) {
+  fs.mkdirSync(TEMP_DIR, { recursive: true });
+}
 
 interface IPet {
   id: number;
@@ -19,18 +27,46 @@ interface PaginationQuery {
 
 export const createPet = async (req: Request, res: Response) => {
   try {
-    const pet = await Pet.create(req.body);
-    const traits = await createPetTrait(req.body.traits, pet.dataValues.id);
-    res.status(201).json(
-      {
-        data: {
-          ...pet,
-          traits: traits
-        }
+    if (!req.file) {
+      throw new Error('Nenhuma imagem foi enviada ou o upload falhou');
+    }
+
+    const { name, humanName, traits } = req.body;
+
+    let traitsArray = [];
+    try {
+      traitsArray = typeof traits === 'string' ? JSON.parse(traits) : traits;
+    } catch (e) {
+      throw new Error('Formato inválido para as características');
+    }
+
+    const { url, publicId } = await uploadImage(req.file.buffer, req.file.originalname);
+
+    const pet = await Pet.create({
+      name,
+      humanName,
+      photoUrl: url,
+      species: 'dog'
+      // photoPublicId: publicId
+    });
+
+    const traitsIds = traitsArray.map((trait: any) => trait.id);
+    const createdTraits = await createPetTrait(traitsIds, pet.dataValues.id);
+
+    res.status(201).json({
+      success: true,
+      data: {
+        ...pet.dataValues,
+        traits: createdTraits
       }
-    )
+    });
+
   } catch (error: any) {
-    res.status(400).json({ error: error.message });
+    console.error('Error creating pet:', error);
+    res.status(400).json({
+      success: false,
+      error: error.message
+    });
   }
 };
 

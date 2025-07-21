@@ -3,38 +3,53 @@ import { ref } from 'vue';
 import ImageUpload from '@/components/ImageUpload.vue'
 import TraitsSelector from '@/components/TraitsSelector.vue';
 import getTraits from '../composables/getTraits';
+import useRegister from '../composables/useRegister';
 import type { ITrait } from '@/types/pet';
 
 const imageFile = ref<File | null>(null);
 
 const { traits: traitsOptions, loading, error } = getTraits();
-
+const { loading: registerLoading, error: registerError, success, registerPet } = useRegister();
 
 const traits = ref<ITrait[]>([{ id: 0, name: 'exemplo' }]);
 const name = ref('');
-const petName = ref('');
+const humanName = ref('');
 
-const handleSubmit = () => {
+const handleSubmit = async () => {
     const formData = {
         image: imageFile.value,
         name: name.value,
-        petName: petName.value,
+        humanName: humanName.value,
         traits: traits.value
     };
-    console.log('Formulário enviado:', formData);
+
+    const result = await registerPet(formData);
+
+    if (result.success) {
+        console.log('Pet registrado com ID:', result.data.id);
+    }
 };
 </script>
 <template>
     <form @submit.prevent="handleSubmit">
         <ImageUpload v-model="imageFile" />
 
-        <input v-model="name" class="textInput" placeholder="seu nome..." />
+        <input v-model="humanName" class="textInput" placeholder="seu nome..." />
 
-        <input v-model="petName" class="textInput" placeholder="nome do pet..." />
+        <input v-model="name" class="textInput" placeholder="nome do pet..." />
 
         <TraitsSelector v-model="traits" :traits-options="traitsOptions" />
 
-        <button type="submit">enviar</button>
+        <div v-if="registerError" class="errorMessage">
+            {{ registerError }}
+        </div>
+        <div v-if="error" class="errorMessage">
+            {{ error }}
+        </div>
+
+        <button type="submit" :disabled="registerLoading">
+            {{ registerLoading ? 'Enviando...' : 'enviar' }}
+        </button>
     </form>
 </template>
 
@@ -66,6 +81,17 @@ form {
 .textInput:focus {
     background: rgba(194, 195, 196);
     outline: none;
+}
+
+
+.error-message {
+    color: #ff4444;
+    margin-top: 10px;
+}
+
+button:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
 }
 
 button {

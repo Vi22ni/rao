@@ -1,3 +1,17 @@
+export interface IPetForm {
+    image: File | null;
+    name: string;
+    humanName: string;
+    traits: ITrait[];
+}
+
+export interface IRegisterResponse {
+    success: boolean;
+    message?: string;
+    data?: any;
+}
+
+
 export interface ITrait {
     id: number;
     name: string;

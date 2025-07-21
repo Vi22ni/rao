@@ -11,13 +11,13 @@ export const createPetTrait = async (traitIds: number[], petId: number) => {
     const petTraits: IPetTrait[] = []
     try {
         for (let i = 0; i < traitIds.length; i++) {
-            const petTrait: IPetTrait = await PetTrait.create(
+            const petTrait = await PetTrait.create(
                 {
                     pet_id: petId,
                     trait_id: traitIds[i]
                 }
             );
-            petTraits.push(petTrait);
+            petTraits.push(petTrait.dataValues);
         }
     } catch (error: any) {
         console.log("🚀 ~ createPetTrait ~ error:", error)

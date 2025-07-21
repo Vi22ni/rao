@@ -4,12 +4,20 @@ import rateLimit, { RateLimitRequestHandler } from 'express-rate-limit';
 import routes from './routes';
 import dotenv from 'dotenv';
 import path from 'path';
+import { v2 as cloudinary } from 'cloudinary';
 
 dotenv.config({
   path: path.resolve(
     process.cwd(),
     `.env.${process.env.NODE_ENV || 'development'}`
   )
+});
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+  // secure: true // Recommended for HTTPS URLs
 });
 
 const app: Express = express();
