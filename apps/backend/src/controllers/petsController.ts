@@ -4,6 +4,8 @@ import { createPetTrait, getPetTraits, IPetTrait } from './petTraitsController'
 import { uploadImage } from '../utils/uploadImage';
 import fs from 'fs';
 import path from 'path';
+import axios from 'axios';
+import FormData from 'form-data';
 
 const TEMP_DIR = path.join(__dirname, '../../temp');
 if (!fs.existsSync(TEMP_DIR)) {
@@ -31,30 +33,44 @@ const TeachableMachine = require("@sashido/teachablemachine-node");
 const model = new TeachableMachine({
   modelUrl: "https://teachablemachine.withgoogle.com/models/OT_85UdPU/"
 });
+
 export const verifyPetImage = async (req: Request, res: Response) => {
   try {
     if (!req.file) {
       throw new Error('Nenhuma imagem foi enviada');
     }
 
-    const tempImagePath = path.join(__dirname, '../../temp', `${Date.now()}_${req.file.originalname}`);
-    fs.writeFileSync(tempImagePath, req.file.buffer);
-
-    const localImageUrl = `${process.env.API_URL}/temp/${path.basename(tempImagePath)}`;
-
-    const predictions = await model.classify({
-      imageUrl: localImageUrl
+    const form = new FormData();
+    form.append('reqtype', 'fileupload');
+    form.append('time', '1h');
+    form.append('fileToUpload', req.file.buffer, {
+      filename: req.file.originalname,
+      contentType: req.file.mimetype
     });
-    fs.unlinkSync(tempImagePath);
+
+    const response = await axios.post(
+      'https://litterbox.catbox.moe/resources/internals/api.php',
+      form,
+      {
+        headers: form.getHeaders()
+      }
+    );
+
+    const uploadUrl = response.data;
+    if (typeof uploadUrl !== 'string' || !uploadUrl.startsWith('http')) {
+      throw new Error('Falha no upload para o Litterbox');
+    }
+
+    const predictions = await model.classify({ imageUrl: uploadUrl });
 
     const topPrediction = predictions.reduce((prev: any, current: any) =>
-      (prev.score > current.score) ? prev : current
+      prev.score > current.score ? prev : current
     );
 
     if (topPrediction.class !== 'dogs' && topPrediction.class !== 'cats') {
       return res.status(400).json({
         success: false,
-        error: 'A imagem não parece ser de um gato ou cachorro. Por favor, envie uma foto válida.',
+        error: 'A imagem não parece ser de um gato ou cachorro.',
         isPet: false
       });
     }
@@ -68,7 +84,7 @@ export const verifyPetImage = async (req: Request, res: Response) => {
     });
 
   } catch (error) {
-    console.error("🚀 ~ verifyPetImage ~ error:", error);
+    console.error("Erro ao verificar imagem:", error);
     res.status(500).json({
       success: false,
       error: 'Erro ao analisar a imagem'
