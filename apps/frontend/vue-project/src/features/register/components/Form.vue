@@ -130,6 +130,7 @@ form {
     padding: 15px 30px;
     width: 100%;
     gap: 15px;
+    margin-bottom: 30px;
 }
 
 .textInput {
