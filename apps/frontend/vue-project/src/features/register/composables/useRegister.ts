@@ -29,6 +29,7 @@ export default function useRegister() {
             data.append('image', formData.image);
             data.append('name', formData.name);
             data.append('humanName', formData.humanName);
+            data.append('species', formData.species);
             data.append('traits', JSON.stringify(formData.traits));
 
             const response = await fetch(`${import.meta.env.VITE_API_URL}/pets`, {

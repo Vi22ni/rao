@@ -25,13 +25,65 @@ interface PaginationQuery {
   size?: string;
 }
 
+const TeachableMachine = require("@sashido/teachablemachine-node");
+
+
+const model = new TeachableMachine({
+  modelUrl: "https://teachablemachine.withgoogle.com/models/OT_85UdPU/"
+});
+export const verifyPetImage = async (req: Request, res: Response) => {
+  try {
+    if (!req.file) {
+      throw new Error('Nenhuma imagem foi enviada');
+    }
+
+    const tempImagePath = path.join(__dirname, '../../temp', `${Date.now()}_${req.file.originalname}`);
+    fs.writeFileSync(tempImagePath, req.file.buffer);
+
+    const localImageUrl = `${process.env.API_URL}/temp/${path.basename(tempImagePath)}`;
+
+    const predictions = await model.classify({
+      imageUrl: localImageUrl
+    });
+    fs.unlinkSync(tempImagePath);
+
+    const topPrediction = predictions.reduce((prev: any, current: any) =>
+      (prev.score > current.score) ? prev : current
+    );
+
+    if (topPrediction.class !== 'dogs' && topPrediction.class !== 'cats') {
+      return res.status(400).json({
+        success: false,
+        error: 'A imagem não parece ser de um gato ou cachorro. Por favor, envie uma foto válida.',
+        isPet: false
+      });
+    }
+
+    res.json({
+      success: true,
+      isPet: true,
+      predictedSpecies: topPrediction.class === 'dogs' ? 'dog' : 'cat',
+      confidence: topPrediction.score,
+      message: `Identificamos que isso é um ${topPrediction.class === 'dogs' ? 'cachorro' : 'gato'} (${(topPrediction.score * 100).toFixed(1)}% de confiança). Confirma?`
+    });
+
+  } catch (error) {
+    console.error("🚀 ~ verifyPetImage ~ error:", error);
+    res.status(500).json({
+      success: false,
+      error: 'Erro ao analisar a imagem'
+    });
+  }
+};
+
+
 export const createPet = async (req: Request, res: Response) => {
   try {
     if (!req.file) {
       throw new Error('Nenhuma imagem foi enviada ou o upload falhou');
     }
 
-    const { name, humanName, traits } = req.body;
+    const { name, humanName, traits, species } = req.body;
 
     let traitsArray = [];
     try {
@@ -46,7 +98,7 @@ export const createPet = async (req: Request, res: Response) => {
       name,
       humanName,
       photoUrl: url,
-      species: 'dog'
+      species
       // photoPublicId: publicId
     });
 

@@ -3,6 +3,7 @@ export interface IPetForm {
     name: string;
     humanName: string;
     traits: ITrait[];
+    species: 'cat' | 'dog';
 }
 
 export interface IRegisterResponse {

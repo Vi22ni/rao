@@ -37,7 +37,6 @@ const handleFileChange = (event: Event) => {
   previewUrl.value = URL.createObjectURL(file);
 
   errorMessage.value = '';
-  console.log("🚀 ~ handleFileChange ~ file:", file)
   emit('update:modelValue', file);
 };
 
