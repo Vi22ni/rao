@@ -50,5 +50,5 @@ app.use('/api', routes);
 app.get("/", (req, res) => res.send("Express on Vercel"));
 app.use('/temp', express.static(path.join(__dirname, '../temp')));
 
-const PORT: number = parseInt(process.env.PORT || '3000', 10);
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+const PORT: number = parseInt('3000', 10);
+app.listen(PORT, () => console.log(`Server ready on port ${PORT}.`));
