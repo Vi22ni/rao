@@ -47,6 +47,7 @@ const limiter: RateLimitRequestHandler = rateLimit({
 
 app.use('/api', limiter);
 app.use('/api', routes);
+app.get("/", (req, res) => res.send("Express on Vercel"));
 app.use('/temp', express.static(path.join(__dirname, '../temp')));
 
 const PORT: number = parseInt(process.env.PORT || '3000', 10);
