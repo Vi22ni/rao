@@ -160,7 +160,7 @@ export const getPets = async (req: Request<{}, {}, {}, PaginationQuery>, res: Re
       limit: size,
       offset: (page - 1) * size,
       include: ['traits'],
-      order: [['createdAt', 'DESC']]
+      order: [['id', 'DESC']]
     });
 
     res.status(200).json({
