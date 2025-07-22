@@ -159,7 +159,8 @@ export const getPets = async (req: Request<{}, {}, {}, PaginationQuery>, res: Re
     const { count, rows: pets } = await Pet.findAndCountAll({
       limit: size,
       offset: (page - 1) * size,
-      include: ['traits']
+      include: ['traits'],
+      order: [['createdAt', 'DESC']]
     });
 
     res.status(200).json({
