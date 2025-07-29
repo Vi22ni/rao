@@ -37,7 +37,7 @@ const handleSubmit = async () => {
     }
 
     if (showConfirmation.value && !userConfirmed.value) {
-        return; 
+        return;
     }
 
     try {
@@ -139,9 +139,8 @@ form {
     align-items: center;
     gap: 10px;
     border-radius: 2px;
-    background: rgba(194, 195, 196, 0.95);
-    box-shadow: 0px -2px 1px 0px #3c3c3c inset, 0px 10px 15px 0px rgba(0, 0, 0, 0.30);
-    color: rgba(60, 60, 60);
+    background: var(--color-background-soft);
+    color: var(--color-text-soft);
     font-size: 14px;
     font-style: italic;
     font-weight: 400;
@@ -150,13 +149,12 @@ form {
 }
 
 .textInput:focus {
-    background: rgba(194, 195, 196);
     outline: none;
 }
 
 
 .error-message {
-    color: #ff4444;
+    color: #FFAE42;
     margin-top: 10px;
 }
 
@@ -175,12 +173,12 @@ button {
     flex-shrink: 0;
     align-self: stretch;
     border-radius: 50px;
-    background: linear-gradient(180deg, rgba(223, 223, 223, 0.95) 0%, rgba(203, 203, 203, 0.95) 50%, rgba(183, 183, 183, 0.95) 55%, rgba(143, 143, 143, 0.95) 100%);
-    box-shadow: 0px -2px 1px 0px #3c3c3c inset, 0px 5px 10px 0px rgba(0, 0, 0, 0.10);
+    background: #FFAE42;
+    box-shadow: 0px -2px 1px 0px #3c3c3c inset;
     cursor: pointer;
     border: none;
     transition: all 500ms ease-in-out;
-    color: rgba(60, 60, 60, 0.90);
+    color: var(--color-text-soft);
     font-size: 14px;
     font-style: normal;
     font-weight: bold;
@@ -190,8 +188,8 @@ button {
 }
 
 button:hover {
-    box-shadow: 0px -2px 1px 0px #3c3c3c inset, 0px 4px 8px 0px rgba(0, 0, 0, 0.35);
-    background: linear-gradient(180deg, rgba(223, 223, 223) 0%, rgba(203, 203, 203) 50%, rgba(183, 183, 183) 55%, rgba(143, 143, 143) 100%);
+    box-shadow: 0px -2px 1px 0px #3c3c3c inset;
+    background: #ff9d1c;
 
 }
 
@@ -201,10 +199,9 @@ button:hover {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background: linear-gradient(180deg, rgba(223, 223, 223) 0%, rgba(203, 203, 203) 50%, rgba(183, 183, 183) 55%, rgba(143, 143, 143) 70%);
+    background: var(--color-background-soft);
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     z-index: 1000;
     display: flex;
     flex-direction: column;
@@ -212,7 +209,7 @@ button:hover {
 }
 
 .confirmation-modal p {
-    color: rgba(60, 60, 60);
+    color: var(--color-text-soft);
 
 }
 

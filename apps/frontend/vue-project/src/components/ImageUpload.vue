@@ -92,8 +92,7 @@ onBeforeUnmount(() => {
   overflow: hidden;
   border-radius: 5px;
   border: 2px solid rgba(60, 60, 60, 0.15);
-  background: rgba(183, 183, 183, 0.80);
-  box-shadow: 0px 10px 15px 0px rgba(0, 0, 0, 0.30);
+  background: var(--color-background-soft);
   background-position: center;
   background-size: cover;
 }
@@ -103,12 +102,12 @@ onBeforeUnmount(() => {
 }
 
 .imageUploadBox:hover {
-  border-color: #888;
-  background: rgba(183, 183, 183, 0.90);
+  background: var(--color-background-soft);
+  color: var(--color-text-soft);
 }
 
 .placeholder {
-  color: rgba(60, 60, 60, 0.90);
+  color: var(--color-text-soft);
   font-size: 16px;
   font-style: normal;
   font-weight: bold;
@@ -127,7 +126,7 @@ onBeforeUnmount(() => {
 }
 
 .errorMessage {
-  color: #dc3545;
+  color: #ff9d1c;
   font-size: 14px;
   text-align: center;
 }
@@ -143,6 +142,7 @@ onBeforeUnmount(() => {
     width: 100%;
   }
 }
+
 @media(min-width: 1000px) {
 
   .imageUploadBox,

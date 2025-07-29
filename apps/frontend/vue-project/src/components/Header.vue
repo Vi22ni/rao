@@ -25,6 +25,7 @@ header {
     width: 100%;
     display: flex;
     justify-content: flex-end;
+    margin-bottom: 30px;
 }
 
 nav {
@@ -33,8 +34,8 @@ nav {
     width: 50%;
     padding: 15px 30px;
     border-radius: 0px 0px 0px 50px;
-    background: rgba(0, 0, 0, 0.15);
-    box-shadow: 0px -2px 1px 0px rgba(0, 0, 0, 0.30) inset, 0px 5px 10px 0px rgba(0, 0, 0, 0.40);
+    background: var(--color-background);
+    box-shadow: 0px -2px 1px 0px rgba(0, 0, 0, 0.30) inset;
 }
 
 a{

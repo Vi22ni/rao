@@ -38,7 +38,7 @@ const { pet } = props;
     align-items: center;
     gap: 10px;
     flex-shrink: 0;
-    box-shadow: 0px -2px 1px 0px rgba(0, 0, 0, 0.40) inset, 0px 10px 15px 0px rgba(0, 0, 0, 0.30);
+    box-shadow: 0px -2px 1px 0px rgba(0, 0, 0, 0.40) inset;
     /* flex: 0 0 100%; */
     overflow: hidden;
 }
@@ -62,7 +62,7 @@ const { pet } = props;
 
 .selectedCard h2,
 .card h2 {
-    color: #FFF;
+    color: var(--color-text);
     font-style: normal;
     font-size: 30px;
     font-weight: 400;

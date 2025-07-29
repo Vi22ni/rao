@@ -11,14 +11,14 @@
 a,
 .green {
   text-decoration: none;
-  color: var(--vt-c-text-dark-2);
+  color: var(--color-text);
   transition: 0.4s;
   padding: 3px;
 }
 
 @media (hover: hover) {
   a:hover {
-    color: var(--vt-c-text-dark-2);
+    color: var(--color-text);
   }
 }
 

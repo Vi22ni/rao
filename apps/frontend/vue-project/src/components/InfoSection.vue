@@ -37,12 +37,12 @@ section {
     justify-content: flex-end;
     align-items: center;
     flex-shrink: 0;
-    background: linear-gradient(180deg, rgba(143, 143, 143, 0.85) 0%, rgba(183, 183, 183, 0.85) 45%, rgba(203, 203, 203, 0.85) 50%, rgba(223, 223, 223, 0.85) 100%);
-    box-shadow: 0px 10px 15px 0px rgba(0, 0, 0, 0.30), 0px -2px 1px 0px rgba(0, 0, 0, 0.40) inset;
+    background: var(--color-background);
+    box-shadow: 0px -2px 1px 0px rgba(0, 0, 0, 0.40) inset;
 }
 
 h1 {
-    color: #3C3C3C;
+    color: var(--color-text);
     font-size: 18px;
     font-style: normal;
     font-weight: 700;
@@ -55,13 +55,14 @@ h1 {
     padding: 15px 30px;
     align-items: flex-start;
     flex-shrink: 0;
-    background: rgba(143, 143, 143, 0.85);
-    box-shadow: 0px 10px 15px 0px rgba(0, 0, 0, 0.30), 0px -2px 1px 0px rgba(0, 0, 0, 0.40) inset;
+    background: var(--color-background-soft);
+    box-shadow: 0px -2px 1px 0px rgba(0, 0, 0, 0.40) inset;
     min-height: 130px;
 }
 
+.textContainer :deep(a),
 .textContainer :deep(p) {
-    color: rgba(0, 0, 0, 0.86);
+    color: var(--color-text-soft);
     font-size: 16px;
     font-style: normal;
     font-weight: 400;

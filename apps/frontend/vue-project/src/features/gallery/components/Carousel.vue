@@ -103,8 +103,8 @@ section {
     flex-direction: column;
     width: 100%;
     border-radius: 0px 0px 0px 50px;
-    background: linear-gradient(180deg, rgba(0, 0, 0, 0.00) 25%, rgba(112, 112, 112, 0.43) 50%, rgba(167, 167, 167, 0.64) 75%, rgba(223, 223, 223, 0.85) 100%);
-    box-shadow: 0px -2px 1px 0px rgba(0, 0, 0, 0.40) inset, 0px 10px 15px 0px rgba(0, 0, 0, 0.30);
+    background: var(--color-background);
+    box-shadow: 0px -2px 1px 0px rgba(0, 0, 0, 0.40) inset;
     padding-bottom: 15px;
     overflow: hidden;
     margin-bottom: 30px;
@@ -132,9 +132,9 @@ button {
     align-items: center;
     border-radius: 50px;
     border: none;
-    background: linear-gradient(180deg, #dfdfdfd3 0%, #cbcbcbc9 50%, #b7b7b7d3 55%, #8f8f8fde 100%);
-    box-shadow: 0px -2px 1px 0px #3C3C3C26 inset, 0px 5px 10px 0px rgba(0, 0, 0, 0.10);
-    color: rgba(60, 60, 60, 0.90);
+    background: #FFAE42;
+    box-shadow: 0px -2px 1px 0px #3C3C3C26 inset;
+    color: var(--color-text-soft);
     font-size: 12px;
     font-style: normal;
     font-weight: 700;
@@ -142,7 +142,7 @@ button {
 }
 
 button:hover {
-    background: linear-gradient(180deg, #dfdfdf 0%, #cbcbcb 50%, #b7b7b7 55%, #8f8f8f 100%);
+    background: #ff9d1c;
     cursor: pointer;
 }
 
@@ -154,6 +154,6 @@ button:hover {
 }
 
 .errorMessage {
-    color: #ff4444;
+    color: #FFAE42;
 }
 </style>
